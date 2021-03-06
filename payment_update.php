@@ -60,7 +60,7 @@ header("Content-Type: text/html; charset=utf-8");
       $_car_id= '';
       $_owner_name= '';
       $_total_price= '';
-      $_paied_price= '';
+      $_paid_price= '';
       $_is_cash='';
       $_check_id='';
       $_description= '';
@@ -73,7 +73,7 @@ header("Content-Type: text/html; charset=utf-8");
          $_car_id= $_row['car_id'];
          $_owner_name= $_row['owner_name'];
          $_total_price= $_row['total_price'];
-         $_paied_price= $_row['paied'];
+         $_paid_price= $_row['paid'];
          $_is_cash= $_row['is_cash'];
          $_check_id= $_row['check_id'];
          $_description= $_row['description'];
@@ -88,35 +88,35 @@ header("Content-Type: text/html; charset=utf-8");
 
     <tr>
       <td> <h3>  סך הכל ששולם  </h3>  </td>
-      <td style="padding-right:20px; "><h3>'.$_paied_price.' </h3></td>
+      <td style="padding-right:20px; "><h3>'.$_paid_price.' </h3></td>
     </tr>
     <tr>
 
         <td> <h3> סכום חדש לתשלום  </h3> </td>
-        <td style="padding-right:20px; ">  <input type="text"  maxlength="10" name="new_paied_price"/><br></td>';
-        $new_paied_price='';
+        <td style="padding-right:20px; ">  <input type="text"  maxlength="10" name="new_paid_price"/><br></td>';
+        $new_paid_price='';
         if  (isset($_POST['submit'])){
-          $new_paied_price= $_POST['new_paied_price'];
+          $new_paid_price= $_POST['new_paid_price'];
         }
-          if(  (isset($_POST['submit'])) &&  ( empty($new_paied_price) ||  (!(is_numeric($new_paied_price))) || ($new_paied_price + $_paied_price>$_total_price) ) ){
+          if(  (isset($_POST['submit'])) &&  ( empty($new_paid_price) ||  (!(is_numeric($new_paid_price))) || ($new_paid_price + $_paid_price>$_total_price) ) ){
 
-              if (empty($new_paied_price)){
+              if (empty($new_paid_price)){
                   echo"<td style='color:red;'>* יש למלא סכום חדש לתשלום </td>";
                }
-               elseif (!is_numeric($new_paied_price)){
+               elseif (!is_numeric($new_paid_price)){
                   echo"<td style='color:red;'>* סכום ששולם צריך להיות רק מספרים </td>";
                }
 
-               elseif ($new_paied_price + $_paied_price>$_total_price) {
+               elseif ($new_paid_price + $_paid_price>$_total_price) {
                   echo"<td style='color:red;'>* סכומים ששולמו גדולים מסך הכל לתשלום </td>";
                }
 
          }
-         if(  (isset($_POST['submit'])) &&  ( !empty($new_paied_price) &&  ((is_numeric($new_paied_price))) && ($new_paied_price + $_paied_price<=$_total_price) ) ){
+         if(  (isset($_POST['submit'])) &&  ( !empty($new_paid_price) &&  ((is_numeric($new_paid_price))) && ($new_paid_price + $_paid_price<=$_total_price) ) ){
          $conn= mysqli_connect($localhost,$user_db,$pass_db , $db) or die("Database Not Found");
 
-        $sql_query= "UPDATE motions SET paied=$new_paied_price + $_paied_price WHERE motion_id=$motion_id";
-        // $sql_query="UPDATE INTO motions (car_id,owner_name,total_price,paied,is_cash,check_id,description,date)  VALUES($_car_id,'$_owner_name','$_total_price',$_paied_prices+ $new_paied_price,$_is_cash,$_check_id,'$_description','$_date')" or die('Insert failed');
+        $sql_query= "UPDATE motions SET paid=$new_paid_price + $_paid_price WHERE motion_id=$motion_id";
+        // $sql_query="UPDATE INTO motions (car_id,owner_name,total_price,paid,is_cash,check_id,description,date)  VALUES($_car_id,'$_owner_name','$_total_price',$_paid_prices+ $new_paid_price,$_is_cash,$_check_id,'$_description','$_date')" or die('Insert failed');
 
         $result=mysqli_query($conn , $sql_query) or  trigger_error(mysqli_error($conn)." ".$sql_query);
         if($result){

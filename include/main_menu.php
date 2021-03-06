@@ -24,19 +24,39 @@
         </ul>
     </li>
      <li>
-        <a href="#">מוצרים</a>
+        <a href="#">אלטרנטורים</a>
         <ul>
-              <li><a href="product_add.php">הוספת מוצר</a></li>
-            <li><a href="product_update.php">עדכון מוצר</a></li>
-            <li><a href="product_freeze.php">הקפאת מוצר</a></li>
+            <li><a href="alter_add.php"> הוספת  אלטרנטור </a></li>
+            <li><a href="alter_list.php"> עדכון  אלטרנטור </a></li>
+        </ul>
+    </li>
+         <li>
+        <a href="#">מצברים</a>
+        <ul>
+            <li><a href="battery_add.php"> הוספת מצבר</a></li>
+            <li><a href="battery_list.php"> עדכון מצבר</a></li>
         </ul>
     </li>
     <li>
-        <a href="#">ספקים</a>
+        <a href="#">מדחסים</a>
         <ul>
-              <li><a href="supplier_add.php">הוספת ספק</a></li>
-            <li><a href="supplier_update.php">עדכון ספק</a></li>
-
+            <li><a href="compressor_add.php"> הוספת מדחס</a></li>
+            <li><a href="compressor_list.php"> עדכון מדחס </a></li>
+        </ul>
+    </li>
+        <li>
+        <a href="#">סטרטרים</a>
+        <ul>
+            <li><a href="starter_add.php"> הוספת סטרטר</a></li>
+            <li><a href="starter_list.php">עדכון סטרטר</a></li>
+        </ul>
+    </li>
+    </li>
+    <li>
+    <a href="#">אחר</a>
+        <ul>
+            <li><a href="others_add.php"> הוספת </a></li>
+            <li><a href="others_list.php"> עדכון</a></li>
         </ul>
     </li>
     <li><a href="reports.php">דוחות</a></li>

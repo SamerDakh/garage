@@ -75,9 +75,9 @@ elseif(isset($_GET['field'])=='total_price')
 {
    $field="total_price";
 }
-elseif(isset($_GET['field'])=='paied')
+elseif(isset($_GET['field'])=='paid')
 {
-   $field="paied";
+   $field="paid";
 }
 elseif(isset($_GET['field'])=='date')
 {
@@ -97,10 +97,10 @@ elseif(isset($_GET['field'])=='description')
 }
 
 require('include/connect.php');
-$sql_query="SELECT * FROM motions ORDER BY $field $sort";
+$sql_query="SELECT * FROM motions  ORDER BY $field $sort";
 $rs = mysqli_query($conn , $sql_query) ;
 $rows=mysqli_num_rows($rs);
-if($rows )
+if($rows>0 )
 {
 
  echo '<table id="table10" style="width:950px;" >';
@@ -111,7 +111,7 @@ if($rows )
    	<th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=car_id">מספר רכב</a></th>
 		<th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=owner_name">שם בעל רכב</a></th>
 		<th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=total_price">סך הכל לתשלום</a></th>
-		<th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=paied">סכום ששולם</a></th>
+		<th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=paid">סכום ששולם</a></th>
     <th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=is_cash">אופן תשלום</a></th>
     <th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=check_id">מספר ציק</a></th>
     <th ><a style="color:black;" href="motions_list.php?sorting='.$sort.'&field=date">תאריך</a></th>
@@ -158,7 +158,7 @@ else {
 		echo " <td >".$car_id."</td>";
 		echo " <td >".$row['owner_name']."</td>";
 		echo " <td >".$row['total_price']."</td>";
-		echo " <td >".$row['paied']."</td>";
+		echo " <td >".$row['paid']."</td>";
     echo " <td >".$payment_type."</td>";
     echo " <td >".$check_id."</td>";
     echo " <td >".$row['date']."</td>";

@@ -64,12 +64,12 @@ header("Content-Type: text/html; charset=utf-8");
   <table>
     <form method="post" style="border:2px solid #555; width:20%;padding:3%; background:#FCFCFC;" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" >
     <tr>
-        <td>מס' רכב</td>
+        <td>מס רכב</td>
         <td>  <input type="text"  maxlength="30" name="car_id"/><br></td>
           <?php
           $car_id='';
           $owner_name='';
-          $paied_price='';
+          $paid_price='';
           $total_price='';
           $description='';
           $is_cash='';
@@ -77,7 +77,7 @@ header("Content-Type: text/html; charset=utf-8");
           if(  (isset($_POST['submit']))){
             $car_id= $_POST['car_id'];
             $owner_name= $_POST['owner_name'];
-            $paied_price= $_POST['paied_price'];
+            $paid_price= $_POST['paid_price'];
             $total_price= $_POST['total_price'];
             $is_cash = ($_POST['payment_type']=='cash') ? 1 : 0;
             $check_id= $_POST['check_id'];
@@ -118,18 +118,18 @@ header("Content-Type: text/html; charset=utf-8");
     </tr>
 
     <tr>
-        <td>ס"כ לתשלום</td>
+        <td>סכ לתשלום</td>
         <td>  <input type="text"  maxlength="30" name="total_price"/><br></td>
           <?php
           // echo (isset($_POST['submit'])) &&  ( empty($total_price) &&  ((!is_numeric($total_price))) ) ;
-          if(  (isset($_POST['submit'])) &&  ( empty($total_price) ||  ((!is_numeric($total_price))) ||  ($paied_price>$total_price) ) ){
+          if(  (isset($_POST['submit'])) &&  ( empty($total_price) ||  ((!is_numeric($total_price))) ||  ($paid_price>$total_price) ) ){
               if (empty($total_price)){
                   echo"<td style='color:red;'> * יש למלא סך הכל לתשלום</td>";
                }
                elseif (!is_numeric($total_price)){
                    echo"<td style='color:red;'> * סכום לתשלום צריך להיות רק מספרים </td>";
                }
-               elseif ($paied_price>$total_price) {
+               elseif ($paid_price>$total_price) {
                    echo"<td style='color:red;'>  * סכום ששולם גדול מהסכום לתשלום </td>";
                }
          }
@@ -137,17 +137,17 @@ header("Content-Type: text/html; charset=utf-8");
     </tr>
     <tr>
         <td>סכום ששולם</td>
-        <td>  <input type="text"  maxlength="30" name="paied_price"/><br></td>
+        <td>  <input type="text"  maxlength="30" name="paid_price"/><br></td>
           <?php
-          if(  (isset($_POST['submit'])) &&  ( empty($paied_price) ||  (!(is_numeric($paied_price))) ) ){
-              if (empty($paied_price)){
+          if(  (isset($_POST['submit'])) &&  ( empty($paid_price) ||  (!(is_numeric($paid_price))) ) ){
+              if (empty($paid_price)){
                   echo"<td style='color:red;'>* יש למלא סכום ששולם</td>";
                }
-               elseif (!is_numeric($paied_price)){
+               elseif (!is_numeric($paid_price)){
                    echo"<td style='color:red;'> * סכום ששולם צריך להיות רק מספרים </td>";
                }
 
-               elseif ($paied_price>$total_price) {
+               elseif ($paid_price>$total_price) {
                    echo"<td style='color:red;'>  * סכום ששולם גדול מהסכום לתשלום </td>";
                }
          }
@@ -167,7 +167,7 @@ header("Content-Type: text/html; charset=utf-8");
         <td>מספר ציק</td>
         <td>  <input type="text"  maxlength="30" name="check_id"/><br></td>
           <?php
-          if(  (isset($_POST['submit'])) &&  (  ( empty($paied_price) && $is_cash==false ) ||  (!(is_numeric($check_id))) ) ){
+          if(  (isset($_POST['submit'])) &&  (  ( empty($paid_price) && $is_cash==false ) ||  (!(is_numeric($check_id))) ) ){
               if (empty($check_id) && $is_cash==false){
                   echo"<td style='color:red;'>* אופן התשלום הוא ציק - לכן חובה למלא מספר ציק</td>";
                }
@@ -202,8 +202,8 @@ header("Content-Type: text/html; charset=utf-8");
            (! ( empty($description) ) ) &&
            ( (  ($is_cash) ) || (is_numeric($check_id) && (!$is_cash)) && !empty($check_id) ) &&
            (! ( ( empty($total_price) ) && (!(ctype_digit($total_price))) )  ) &&
-           (! ( ( empty($paied_price) ) && (!(ctype_digit($paied_price))) ) ) &&
-           ( ! ($paied_price>$total_price))
+           (! ( ( empty($paid_price) ) && (!(ctype_digit($paid_price))) ) ) &&
+           ( ! ($paid_price>$total_price))
       ){
         $localhost="localhost";
         $user_db="root";
@@ -213,7 +213,7 @@ header("Content-Type: text/html; charset=utf-8");
 
         $conn= mysqli_connect($localhost,$user_db,$pass_db , $db) or die("Database Not Found");
         $date=date("Y-m-d");
-        $sql_query="INSERT INTO motions (car_id,owner_name,total_price,paied,is_cash,check_id,description,date)  VALUES($car_id,'$owner_name','$total_price',$paied_price,$is_cash,$check_id,'$description','$date')" or die('Insert failed');
+        $sql_query="INSERT INTO motions (car_id,owner_name,total_price,paid,is_cash,check_id,description,date)  VALUES($car_id,'$owner_name','$total_price',$paid_price,$is_cash,$check_id,'$description','$date')" or die('Insert failed');
 
         $result=mysqli_query($conn , $sql_query) or  trigger_error(mysqli_error($conn)." ".$sql_query);
         if($result){
