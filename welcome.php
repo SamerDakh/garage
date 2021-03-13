@@ -1,9 +1,9 @@
 <?php
 
-$d = date("Y-m-d",strtotime("+2 week"));
+$d = date("Y-m-d", strtotime("+2 week"));
 
 
-include'main.php';
+include 'main.php';
 include('include/connect.php');
 // 	$q="SELECT  * FROM  inventory WHERE  expiry_date <  '$d'
 //   ";
@@ -17,9 +17,10 @@ include('include/connect.php');
 //
 //
 //  }
-    // session_start();
-    $_SESSION["Login"] = "YES";
-    $_SESSION['username'] = $username;
-    echo "<script>window.location.assign('main.php');</script>";
+// session_start();
+$_SESSION["Login"] = "YES";
+$username ="";
+$_SESSION['username'] = $username;
+echo "<script>window.location.assign('main.php');</script>";
 
 ?>
