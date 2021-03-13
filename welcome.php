@@ -19,7 +19,6 @@ include('include/connect.php');
 //  }
 // session_start();
 $_SESSION["Login"] = "YES";
-$username ="";
 $_SESSION['username'] = $username;
 echo "<script>window.location.assign('main.php');</script>";
 

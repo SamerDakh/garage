@@ -138,7 +138,7 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
                            type="submit" formaction="motions_list.php" name="back_to_motions"
                            value="חזרה לרשימת תנועות"></td>
                 <td></td>
-
+            </tr>
                 </form>
 
         </table>
@@ -153,5 +153,6 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
         }
     </script>
 
+</div>
 </body>
 </html>

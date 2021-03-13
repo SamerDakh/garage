@@ -31,5 +31,11 @@ if ($_dbx->query($batteries_table_sql) === FALSE) {
     echo "Table not created: batteries " . $_dbx->error;
 }
 
+#######   alternators  #####
+$alternators_table_sql = "CREATE TABLE IF NOT EXISTS $DATABASE_NAME.alternators(alternator_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT ,cars  VARCHAR(30) NOT NULL, status VARCHAR(30) NOT NULL, amber INT NOT NULL ,   from_year INT NOT NULL , to_year INT NOT NULL ,amount INT NOT NULL,description VARCHAR(100) NOT NULL)";
+
+if ($_dbx->query($alternators_table_sql) === FALSE) {
+    echo "Table not created: alternators " . $_dbx->error;
+}
 
 ?>

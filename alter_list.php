@@ -38,7 +38,7 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
     <br><br><br>
 
     <?php
-    echo '<h3>רשימת מצברים</h3>';
+    echo '<h3>רשימת אלטרנטורים</h3>';
 
     ?>
 
@@ -49,7 +49,7 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
     <?php
 
 
-    $field = 'battery_id';
+    $field = 'alternator_id';
     $sort = 'ASC';
 
     if (isset($_GET['sorting'])) {
@@ -59,23 +59,32 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
             $sort = 'ASC';
         }
     }
+
+
     if (isset($_GET['field']) && isset($_GET['sorting'])) {
-        if (($_GET['field']) == 'battery_id') {
-            $field = "battery_id";
-        } elseif (($_GET['field']) == 'company_name') {
-            $field = "company_name";
-        } elseif (($_GET['field']) == 'amount') {
-            $field = "amount";
-        } elseif (($_GET['field']) == 'expire_date') {
-            $field = "expire_date";
+        if (($_GET['field']) == 'alternator_id') {
+            $field = "alternator_id";
+        } elseif (($_GET['field']) == 'cars') {
+            $field = "cars";
+        } elseif (($_GET['field']) == 'status') {
+            $field = "status";
         } elseif (($_GET['field']) == 'amber') {
             $field = "amber";
-        } elseif (isset($_GET['field']) == 'description') {
+        } elseif (($_GET['field']) == 'from_year') {
+            $field = "from_year";
+        }
+        elseif (($_GET['field']) == 'to_year') {
+            $field = "to_year";
+        }
+        elseif (($_GET['field']) == 'amount') {
+            $field = "amount";
+        }
+        elseif (isset($_GET['field']) == 'description') {
             $field = "description";
         }
     }
     require('include/connect.php');
-    $sql_query = "SELECT * FROM batteries  ORDER BY $field $sort";
+    $sql_query = "SELECT * FROM alternators  ORDER BY $field $sort";
     $rs = mysqli_query($conn, $sql_query);
     $rows = mysqli_num_rows($rs);
     if ($rows > 0) {
@@ -83,13 +92,15 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
         echo '<table id="table10" style="width:950px;" >';
         echo '<thead >';
         echo '
-		<th ><a style="color:black;" href="battery_list.php"></a></th>
-		<th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=battery_id">מספר מצבר</a></th>
-		<th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=company_name">שם חברה</a></th>
-   	    <th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=amber">אמבר</a></th>
-		<th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=amount">כמות</a></th>
-		<th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=expire_date">תאריך תפוגה</a></th>
-        <th ><a style="color:black;" href="battery_list.php?sorting=' . $sort . '&field=description">פירוט</a></th>';
+		<th ><a style="color:black;" href="alter_list.php"></a></th>
+		<th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=alternator_id">מספר אלטרנטור</a></th>
+		<th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=cars">רכב</a></th>
+	    <th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=status">מצב</a></th>
+   	    <th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=amber">אמבר</a></th>
+   	    <th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=from_year">משנת</a></th>
+		<th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=to_year">עד שנת</a></th>
+		<th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=amount">כמות</a></th>
+        <th ><a style="color:black;" href="alter_list.php?sorting=' . $sort . '&field=description">פירוט</a></th>';
         echo '</thead>';
 
         echo '<tbody >';
@@ -99,6 +110,7 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
 
         while ($row = mysqli_fetch_array($rs)) {
             $cnt++;
+            $status='';
 
             if ($cnt % 2)
                 $class = 'odd';
@@ -106,18 +118,25 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
             else
                 $class = 'even';
 
+            if ($row['status'] == "new")
+                $status = 'חדש';
 
-            echo '<form  action="battery_list.php" method="POST">';
+            else
+                $status = 'משובץ';
+
+            echo '<form  action="alter_list.php" method="POST">';
             echo "<tr class=$class >";
 
             echo " <td style='color:white;'>" . "<input style='color:#555;width:75px;' type=submit name=update value='עדכן' " . "</td>";
-            echo " <td >" . $row['battery_id'] . "</td>";
-            echo " <td >" . $row['company_name'] . "</td>";
+            echo " <td >" . $row['alternator_id'] . "</td>";
+            echo " <td >" . $row['cars'] . "</td>";
+            echo " <td >" . $status . "</td>";
             echo " <td >" . $row['amber'] . "</td>";
+            echo " <td >" . $row['from_year'] . "</td>";
+            echo " <td >" . $row['to_year'] . "</td>";
             echo " <td >" . $row['amount'] . "</td>";
-            echo " <td >" . $row['expire_date'] . "</td>";
             echo " <td >" . $row['description'] . "</td>";
-            echo " <td style='display:none'>" . "<input  type=hidden name=hidden value=" . $row['battery_id'] . " </td>";
+            echo " <td style='display:none'>" . "<input  type=hidden name=hidden value=" . $row['alternator_id'] . " </td>";
             echo "</form>";
             echo "</tr>";
 
@@ -128,14 +147,14 @@ echo " <p style='float:left;font-size:14px;padding:10px;font-weight:bolder;'>| �
 
 
     } else
-        echo "אין מצברים ברשימה";
+        echo "אין אלטרנטורים ברשימה";
 
 
     if ((isset($_POST['update']))) {
         $hidden = $_POST['hidden'];
-        echo '<script> location.replace("battery_update.php?battery_id=' . $hidden . '"); </script>';
+        echo '<script> location.replace("alter_update.php?alter_id=' . $hidden . '"); </script>';
         // alert(".$hidden.");
-        // window.location('payment_update.php?battery_id=".$hidden."');</script>";
+        // window.location('payment_update.php?alter_id=".$hidden."');</script>";
         // header("Location: google.com");
         // echo "<script> alert(".$hidden.") </script>";
         // header('Location: www.google.com');
